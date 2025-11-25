@@ -43,9 +43,9 @@ jobs:
       - name: Deploy Blue/Green to VPS
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             export GITHUB_REPOSITORY=${{ github.repository }}
             /home/diego/app/deploy_blue_green.sh ${{ github.sha }}
