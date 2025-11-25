@@ -5,6 +5,8 @@ const app = express();
 const APP_COLOR = process.env.APP_COLOR || 'unknown';
 
 // En tu ruta principal, agrega el color
+
+
 app.get('/', (req, res) => {
   res.send(`
     <html>
