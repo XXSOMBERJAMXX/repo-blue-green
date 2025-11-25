@@ -1,7 +1,9 @@
-on: 
+name: Deploy Blue/Green
+
+on:
   push:
     branches: [ main ]
-    
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -25,24 +27,25 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ env.REPO_LOWER }}:latest 
+            ghcr.io/${{ env.REPO_LOWER }}:latest
             ghcr.io/${{ env.REPO_LOWER }}:${{ github.sha }}
-    deploy:
-      needs: build-and-push
-      runs-on: ubuntu-latest
-      steps:
-        - name: Deploy blue/green to vps
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.VPS_HOST }}
-            username: ${{ secrets.VPS_USER }}
-            key: ${{ secrets.VPS_SSH_KEY }}
-            script: |
-              export GITHUB_REPOSITORY=${{github.repository}}
-              /home/deployer/deploy-blue-green.sh ${{github.sha}}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Blue/Green to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            export GITHUB_REPOSITORY=${{ github.repository }}
+            /home/diego/app/deploy_blue_green.sh ${{ github.sha }}
