@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
         <div class="container">
           <h1>${APP_COLOR} Environment</h1>
           <p>Hello World!</p>
-          <p>Deployment: Blue/Green Strategy</p>
+          <p>Deployment: Blue Strategy</p>
         </div>
       </body>
     </html>
