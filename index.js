@@ -1,3 +1,6 @@
+const express = require('express');
+const app = express();
+
 // Al inicio de tu archivo
 const APP_COLOR = process.env.APP_COLOR || 'unknown';
 
@@ -39,6 +42,10 @@ app.get('/', (req, res) => {
       </body>
     </html>
   `);
-});git add .
-git commit -m "Add Blue/Green visual indicator"
-git push origin main
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+ console.log(`Server listening on port ${PORT}`);
+});
